@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.shopping.inandout'
 version = '0.0.1-SNAPSHOT'
-description = 'Travelling Salesman Problem solver service used to improve the shopping experience'
+description = 'A RESTful web service for handling customer queries and computing TSP solutions'
 
 java {
 	toolchain {
