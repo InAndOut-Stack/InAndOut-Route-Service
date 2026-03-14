@@ -1,10 +1,10 @@
-package com.shopping.inandout.backend;
+package com.shopping.inandout.inandout_route_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class InandoutRouteServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
