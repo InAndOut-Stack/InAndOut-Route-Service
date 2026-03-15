@@ -13,7 +13,7 @@ java {
 }
 
 application {
-    mainClass = "com.shopping.inandout.routeservice.RouteServiceApplication"
+    mainClass = "com.shopping.inandout.routeservice.RouteService"
 }
 
 configurations {
