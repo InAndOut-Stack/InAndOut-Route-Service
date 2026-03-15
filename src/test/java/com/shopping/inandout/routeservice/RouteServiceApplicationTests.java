@@ -1,10 +1,10 @@
-package com.shopping.inandout.inandout_route_service;
+package com.shopping.inandout.routeservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InandoutRouteServiceApplicationTests {
+class RouteServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,13 +1,12 @@
-package com.shopping.inandout.inandout_route_service;
+package com.shopping.inandout.routeservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InandoutRouteServiceApplication {
-
+public class RouteServiceApplication {
+	
 	public static void main(String[] args) {
-		SpringApplication.run(InandoutRouteServiceApplication.class, args);
+		SpringApplication.run(RouteServiceApplication.class, args);
 	}
-
 }
