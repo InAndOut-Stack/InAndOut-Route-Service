@@ -1,0 +1,3 @@
+[submodule "InAndOut-API-Modelling"]
+	path = InAndOut-API-Modelling
+	url = https://github.com/InAndOut-Stack/InAndOut-API-Modelling.git
