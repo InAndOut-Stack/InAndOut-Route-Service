@@ -8,7 +8,7 @@ plugins {
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -93,4 +93,8 @@ tasks.named("compileJava") {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+java.sourceSets["main"].java {
+    srcDirs("model", "src/main/smithy")
 }
