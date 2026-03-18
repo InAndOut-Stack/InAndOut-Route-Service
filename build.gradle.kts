@@ -8,7 +8,7 @@ plugins {
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -73,7 +73,7 @@ dependencies {
 afterEvaluate {
     sourceSets {
         main {
-            java.srcDir("build/java-client/java-client-codegen")
+            java.srcDir("build/java-route-service/java-server-codegen/com/shopping/inandout")
         }
     }
 }
@@ -83,7 +83,7 @@ tasks.register<Exec>("smithyBuild") {
     description = "Java models codegen from Smithy model."
     commandLine("cmd", "/c", "smithy", "build",
 		"--config", ".\\InAndOut-API-Modelling\\smithy-build.json",
-		"--projection", "java-client",
+		"--projection", "java-route-service",
 		"--output", "build/")
 }
 
