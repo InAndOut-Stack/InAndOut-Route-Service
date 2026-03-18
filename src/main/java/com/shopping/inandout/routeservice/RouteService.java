@@ -14,9 +14,8 @@ import software.amazon.smithy.java.server.Server;
 
 public class RouteService implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(RouteService.class.getName());
-    // private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static void main(String... args) throws InterruptedException, ExecutionException {
+    public static void main(String... args) throws RuntimeException {
         new RouteService().run();
     }
 

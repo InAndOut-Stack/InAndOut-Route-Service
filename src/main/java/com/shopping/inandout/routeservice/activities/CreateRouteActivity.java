@@ -6,8 +6,6 @@ import com.shopping.inandout.model.CreateRouteOutput;
 
 import software.amazon.smithy.java.server.RequestContext;
 
-// i love my girlfriend <333333333333
-
 public class CreateRouteActivity implements CreateRouteOperation {
     public CreateRouteOutput createRoute(CreateRouteInput input, RequestContext context) {
         return CreateRouteOutput.builder().build();
