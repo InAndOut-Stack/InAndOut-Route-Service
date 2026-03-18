@@ -7,6 +7,7 @@ import com.shopping.inandout.model.DeleteRouteOutput;
 import software.amazon.smithy.java.server.RequestContext;
 
 public class DeleteRouteActivity {
-    DeleteRouteOutput deleteRoute(DeleteRouteInput input, RequestContext context);
-    
+    DeleteRouteOutput deleteRoute(DeleteRouteInput input, RequestContext context) {
+        
+    } 
 }

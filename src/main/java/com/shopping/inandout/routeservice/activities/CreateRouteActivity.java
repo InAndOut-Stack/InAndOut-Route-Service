@@ -9,6 +9,7 @@ import software.amazon.smithy.java.server.RequestContext;
 // i love my girlfriend <33333333333
 
 public class CreateRouteActivity implements CreateRouteOperation {
-    CreateRouteOutput createRoute(CreateRouteInput input, RequestContext context);
-    
+    CreateRouteOutput createRoute(CreateRouteInput input, RequestContext context) {
+
+    }
 }
