@@ -29,7 +29,7 @@ public class RouteService implements Runnable {
                 .build();
 
         Server server = Server.builder()
-                .endpoints(URI.create("https://localhost:8888"))
+                .endpoints(URI.create("http://localhost:8888"))
                 .addService(service)
                 .build();
         

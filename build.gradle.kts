@@ -31,16 +31,18 @@ repositories {
     mavenLocal()
 }
 
-val smithyJavaVersion: String by project
-
 dependencies {
-    implementation("software.amazon.smithy.java:client-core:0.0.3")
+	val smithyJavaVersion: String by project
+
+    implementation("software.amazon.smithy.java:core:$smithyJavaVersion")
     implementation("software.amazon.smithy.java.codegen:plugins:$smithyJavaVersion")
-    // Core library for the Java client
     // Adds the server implementation of the `RestJson1` protocol
     implementation("software.amazon.smithy.java:aws-server-restjson:$smithyJavaVersion")
     // Adds an HTTP server implementation based on netty
     implementation("software.amazon.smithy.java:server-netty:$smithyJavaVersion")
+
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
 
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-r2dbc")
@@ -52,9 +54,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webclient")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springframework.boot:spring-boot-starter-webservices")
-	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-jdbc-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-r2dbc-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-restclient-test")
@@ -65,6 +65,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-webclient-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webservices-test")
+	
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testRuntimeOnly("com.h2database:h2")
 	testRuntimeOnly("io.r2dbc:r2dbc-h2")
