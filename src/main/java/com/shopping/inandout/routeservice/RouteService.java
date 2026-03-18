@@ -5,17 +5,11 @@ import com.shopping.inandout.routeservice.activities.CreateRouteActivity;
 import com.shopping.inandout.routeservice.activities.DeleteRouteActivity;
 import com.shopping.inandout.routeservice.activities.GetRouteActivity;
 
-import jakarta.annotation.PostConstruct;
-
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
 
+import software.amazon.smithy.java.server.Service;
 import software.amazon.smithy.java.server.Server;
 
 public class RouteService implements Runnable {
@@ -30,8 +24,8 @@ public class RouteService implements Runnable {
     public void run() {
         Service service = InAndOut.builder()
                 .addCreateRouteOperation(new CreateRouteActivity())
-                .addGetRouteOperation(new GetRouteActivity())
                 .addDeleteRouteOperation(new DeleteRouteActivity())
+                .addGetRouteOperation(new GetRouteActivity())
                 .build();
 
         Server server = Server.builder()
