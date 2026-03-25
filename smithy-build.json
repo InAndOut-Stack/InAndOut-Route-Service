@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "plugins": {
+    "java-server-codegen": {
+      "service": "com.shopping.inandout#RouteService",
+      "namespace": "com.shopping.inandout"
+    }
+  }
+}
