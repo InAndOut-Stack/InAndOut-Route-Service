@@ -27,8 +27,10 @@ public class RouteService implements Runnable {
                 .addGetRouteOperation(new GetRouteActivity())
                 .build();
 
+        String endpoint = System.getenv()
+                .getOrDefault("ROUTE_SERVICE_ENDPOINT", "http://0.0.0.0:8888");
         Server server = Server.builder()
-                .endpoints(URI.create("http://localhost:8888"))
+                .endpoints(URI.create(endpoint))
                 .addService(service)
                 .build();
         
