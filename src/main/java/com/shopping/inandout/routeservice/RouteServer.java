@@ -6,8 +6,10 @@ import com.shopping.inandout.routeservice.activities.DeleteRouteActivity;
 import com.shopping.inandout.routeservice.activities.GetRouteActivity;
 
 import java.net.URI;
-import java.util.logging.Logger;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import software.amazon.smithy.java.server.Service;
 import software.amazon.smithy.java.server.Server;
@@ -33,19 +35,32 @@ public class RouteServer implements Runnable {
                 .endpoints(URI.create(endpoint))
                 .addService(service)
                 .build();
-        
+
+        CountDownLatch latch = new CountDownLatch(1);
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> shutdownServer(server, latch)));
+
         LOGGER.info("Starting server...");
         server.start();
 
         try {
-            Thread.currentThread().join();
+            latch.await();
         } catch (InterruptedException e) {
-            LOGGER.info("Stopping server...");
-            try {
-                server.shutdown().get();
-            } catch (InterruptedException | ExecutionException ex) {
-                throw new RuntimeException(ex);
-            }
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void shutdownServer(Server server, CountDownLatch latch) {
+        LOGGER.info("Stopping server...");
+        try {
+            server.shutdown().get();
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.SEVERE, "Error shutting down server", e);
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            LOGGER.log(Level.SEVERE, "Error shutting down server", e);
+        } finally {
+            latch.countDown();
         }
     }
 }
