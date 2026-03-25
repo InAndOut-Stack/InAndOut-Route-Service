@@ -8,6 +8,6 @@ import software.amazon.smithy.java.server.RequestContext;
 
 public class GetRouteActivity implements GetRouteOperation {
     public GetRouteOutput getRoute(GetRouteInput input, RequestContext context) {
-        return GetRouteOutput.builder().build();
+        throw new UnsupportedOperationException("Not (yet) supported operation");
     }
 }

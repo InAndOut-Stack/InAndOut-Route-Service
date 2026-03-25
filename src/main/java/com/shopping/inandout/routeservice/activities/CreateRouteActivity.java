@@ -8,6 +8,6 @@ import software.amazon.smithy.java.server.RequestContext;
 
 public class CreateRouteActivity implements CreateRouteOperation {
     public CreateRouteOutput createRoute(CreateRouteInput input, RequestContext context) {
-        return CreateRouteOutput.builder().build();
+        throw new UnsupportedOperationException("Not (yet) supported operation");
     }
 }

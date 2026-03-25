@@ -8,6 +8,6 @@ import software.amazon.smithy.java.server.RequestContext;
 
 public class DeleteRouteActivity implements DeleteRouteOperation {
     public DeleteRouteOutput deleteRoute(DeleteRouteInput input, RequestContext context) {
-        return DeleteRouteOutput.builder().build();
+        throw new UnsupportedOperationException("Not (yet) supported operation");
     } 
 }
