@@ -1,5 +1,19 @@
 # InAndOut-Route-Service
 
+## Setup
+
+This project uses git submodules for API modelling. To ensure the project builds correctly, initialize the submodules when cloning:
+
+```bash
+git clone --recurse-submodules <repo-url>
+```
+
+Alternatively, if you've already cloned the repository, run:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Build
 
 To build the project, use the Gradle wrapper:
