@@ -2,25 +2,8 @@
   "version": "1.0",
   "plugins": {
     "java-server-codegen": {
-      "service": "com.shopping.inandout#InAndOut",
+      "service": "com.shopping.inandout#RouteService",
       "namespace": "com.shopping.inandout"
-    }
-  },
-  "projections": {
-    "models": {
-      "transforms": [
-        {
-          "name": "includeNamespaces",
-          "args": {
-            "namespaces": [
-              "aws.api",
-              "aws.protocols",
-              "com.shopping.inandout",
-              "com.shopping.inandout.route"
-            ]
-          }
-        }
-      ]
     }
   }
 }

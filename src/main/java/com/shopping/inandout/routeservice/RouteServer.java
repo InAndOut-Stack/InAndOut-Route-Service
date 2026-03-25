@@ -1,6 +1,6 @@
 package com.shopping.inandout.routeservice;
 
-import com.shopping.inandout.service.InAndOut;
+import com.shopping.inandout.service.RouteService;
 import com.shopping.inandout.routeservice.activities.CreateRouteActivity;
 import com.shopping.inandout.routeservice.activities.DeleteRouteActivity;
 import com.shopping.inandout.routeservice.activities.GetRouteActivity;
@@ -12,16 +12,16 @@ import java.util.concurrent.ExecutionException;
 import software.amazon.smithy.java.server.Service;
 import software.amazon.smithy.java.server.Server;
 
-public class RouteService implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(RouteService.class.getName());
+public class RouteServer implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(RouteServer.class.getName());
 
     public static void main(String... args) throws RuntimeException {
-        new RouteService().run();
+        new RouteServer().run();
     }
 
     @Override
     public void run() {
-        Service service = InAndOut.builder()
+        Service service = RouteService.builder()
                 .addCreateRouteOperation(new CreateRouteActivity())
                 .addDeleteRouteOperation(new DeleteRouteActivity())
                 .addGetRouteOperation(new GetRouteActivity())

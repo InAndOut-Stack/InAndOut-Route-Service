@@ -1,5 +1,5 @@
 group = "com.shopping.inandout"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 description = "A RESTful web service for handling customer queries and computing TSP solutions"
 
 allprojects {
@@ -48,7 +48,7 @@ dependencies {
 
 // Add generated source code to the compilation sourceSet
 afterEvaluate {
-    val serverPath = smithy.getPluginProjectionPath("models", "java-server-codegen")
+    val serverPath = smithy.getPluginProjectionPath(smithy.sourceProjection.get(), "java-server-codegen")
     sourceSets.main.get().java.srcDir(serverPath)
 }
 
