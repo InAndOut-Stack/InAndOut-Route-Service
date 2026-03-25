@@ -16,7 +16,7 @@ plugins {
 }
 
 application {
-    mainClass = "com.shopping.inandout.routeservice.RouteService"
+    mainClass = "com.shopping.inandout.routeservice.RouteServer"
 }
 
 repositories {
