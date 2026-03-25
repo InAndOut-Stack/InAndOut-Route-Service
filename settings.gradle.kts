@@ -13,6 +13,3 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-
-// Subprojects
-include("InAndOut-API-Modelling")

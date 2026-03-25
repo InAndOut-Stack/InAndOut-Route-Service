@@ -1,5 +1,13 @@
 {
   "version": "1.0",
+  "sources": ["InAndOut-API-Modelling/model/"],
+  "outputDirectory": "build/smithyprojections/routeservice/",
+  "maven": {
+    "dependencies": [
+      "software.amazon.smithy:smithy-aws-traits:1.67.0",
+      "software.amazon.smithy.java.codegen:plugins:0.0.1"
+    ]
+  },
   "plugins": {
     "java-server-codegen": {
       "service": "com.shopping.inandout#RouteService",

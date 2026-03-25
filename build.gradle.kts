@@ -12,7 +12,6 @@ allprojects {
 plugins {
     `java-library`
 	application
-    id("software.amazon.smithy.gradle.smithy-base")
 }
 
 application {
@@ -26,12 +25,9 @@ repositories {
 
 dependencies {
 	val smithyJavaVersion: String by project
-	
-	// Smithy java model generation
-    smithyBuild("software.amazon.smithy.java.codegen:plugins:$smithyJavaVersion")
-    implementation(project(":InAndOut-API-Modelling"))
 
-    // Adds an HTTP server implementation based on netty
+    implementation("software.amazon.smithy.java:core:$smithyJavaVersion")
+	// Adds an HTTP server implementation based on netty
     implementation("software.amazon.smithy.java:server-netty:$smithyJavaVersion")
     // Adds the server implementation of the `RestJson1` protocol
     implementation("software.amazon.smithy.java:aws-server-restjson:$smithyJavaVersion")
@@ -46,10 +42,18 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-// Add generated source code to the compilation sourceSet
 afterEvaluate {
-    val serverPath = smithy.getPluginProjectionPath(smithy.sourceProjection.get(), "java-server-codegen")
-    sourceSets.main.get().java.srcDir(serverPath)
+    sourceSets {
+        main {
+            java.srcDir("build/smithyprojections/routeservice/source/java-server-codegen/com/shopping/inandout")
+        }
+    }
+}
+
+tasks.register<Exec>("smithyBuild") {
+    group = "build"
+    description = "Java models codegen from Smithy model."
+    commandLine("cmd", "/c", "smithy", "build")
 }
 
 tasks.named("compileJava") {
