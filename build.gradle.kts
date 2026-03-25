@@ -13,10 +13,11 @@ plugins {
     `java-library`
 	application
     id("software.amazon.smithy.gradle.smithy-base")
+    jacoco
 }
 
 application {
-    mainClass = "com.shopping.inandout.routeservice.RouteServer"
+    mainClass = "com.shopping.inandout.routeservice.RouteServiceWrapper"
 }
 
 repositories {
@@ -43,6 +44,8 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:3.11.2")
+    testImplementation("org.mockito:mockito-core:3.11.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -60,4 +63,8 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 
     maxHeapSize = "1G"
+    testLogging {
+        events("passed", "skipped", "failed")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
 }

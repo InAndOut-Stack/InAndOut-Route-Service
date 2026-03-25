@@ -1,6 +1,7 @@
 package com.shopping.inandout.routeservice;
 
 import com.shopping.inandout.service.RouteService;
+
 import com.shopping.inandout.routeservice.activities.CreateRouteActivity;
 import com.shopping.inandout.routeservice.activities.DeleteRouteActivity;
 import com.shopping.inandout.routeservice.activities.GetRouteActivity;
@@ -14,25 +15,27 @@ import java.util.logging.Logger;
 import software.amazon.smithy.java.server.Service;
 import software.amazon.smithy.java.server.Server;
 
-public class RouteServer implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(RouteServer.class.getName());
+public class RouteServiceWrapper implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(RouteServiceWrapper.class.getName());
 
     public static void main(String... args) throws RuntimeException {
-        new RouteServer().run();
+        new RouteServiceWrapper().run();
     }
 
     @Override
     public void run() {
+        URI uri = URI.create(
+                System.getenv()
+                        .getOrDefault("ROUTE_SERVICE_ENDPOINT", "http://0.0.0.0:8888"));
+
         Service service = RouteService.builder()
                 .addCreateRouteOperation(new CreateRouteActivity())
                 .addDeleteRouteOperation(new DeleteRouteActivity())
                 .addGetRouteOperation(new GetRouteActivity())
                 .build();
 
-        String endpoint = System.getenv()
-                .getOrDefault("ROUTE_SERVICE_ENDPOINT", "http://0.0.0.0:8888");
         Server server = Server.builder()
-                .endpoints(URI.create(endpoint))
+                .endpoints(uri)
                 .addService(service)
                 .build();
 
