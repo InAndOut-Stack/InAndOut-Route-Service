@@ -1,12 +1,5 @@
 package com.shopping.inandout.routeservice;
 
-import com.shopping.inandout.service.RouteService;
-
-import com.shopping.inandout.routeservice.activities.CreateRouteActivity;
-import com.shopping.inandout.routeservice.activities.DeleteRouteActivity;
-import com.shopping.inandout.routeservice.activities.GetRouteActivity;
-
-import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -14,43 +7,46 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import software.amazon.smithy.java.server.Service;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import com.shopping.inandout.routeservice.dagger.RouteServiceComponent;
+import com.shopping.inandout.routeservice.dagger.DaggerRouteServiceComponent;
+
 import software.amazon.smithy.java.server.Server;
 
+@Singleton
 public class RouteServiceWrapper {
     private static final Logger LOGGER = Logger.getLogger(RouteServiceWrapper.class.getName());
 
-    public static void main(String... args) throws RuntimeException {
-        URI uri = URI.create(
-                System.getenv()
-                        .getOrDefault("ROUTE_SERVICE_ENDPOINT", "http://0.0.0.0:8888"));
+    public static void main(String... args) {
+        RouteServiceComponent component = DaggerRouteServiceComponent.create();
+        RouteServiceWrapper wrapper = component.getRouteServiceWrapper();
+    }
 
-        Service service = RouteService.builder()
-                .addCreateRouteOperation(new CreateRouteActivity())
-                .addDeleteRouteOperation(new DeleteRouteActivity())
-                .addGetRouteOperation(new GetRouteActivity())
-                .build();
+    private final Server server;
+    private final CountDownLatch latch;
 
-        Server server = Server.builder()
-                .endpoints(uri)
-                .addService(service)
-                .build();
+    @Inject
+    public RouteServiceWrapper(Server server, CountDownLatch latch) {
+        this.server = server;
+        this.latch = latch;
+    }
 
-        CountDownLatch latch = new CountDownLatch(1);
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> shutdown(server, latch)));
-        
+    public void run() {
         LOGGER.info("Starting server...");
         server.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
 
         try {
             latch.await();
         } catch (InterruptedException e) {
+            LOGGER.log(Level.WARNING, "Server main thread interrupted", e);
             Thread.currentThread().interrupt();
         }
     }
 
-    public static void shutdown(Server server, CountDownLatch latch) {
+    public void shutdown() {
         LOGGER.info("Stopping server...");
         try {
             server.shutdown().get(30, TimeUnit.SECONDS);
