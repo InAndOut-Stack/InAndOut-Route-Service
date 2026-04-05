@@ -22,6 +22,7 @@ public class RouteServiceWrapper {
     public static void main(String... args) {
         RouteServiceComponent component = DaggerRouteServiceComponent.create();
         RouteServiceWrapper wrapper = component.getRouteServiceWrapper();
+        wrapper.run();
     }
 
     private final Server server;
