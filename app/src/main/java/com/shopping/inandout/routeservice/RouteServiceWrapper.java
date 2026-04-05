@@ -9,21 +9,18 @@ import com.shopping.inandout.routeservice.activities.GetRouteActivity;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import software.amazon.smithy.java.server.Service;
 import software.amazon.smithy.java.server.Server;
 
-public class RouteServiceWrapper implements Runnable {
+public class RouteServiceWrapper {
     private static final Logger LOGGER = Logger.getLogger(RouteServiceWrapper.class.getName());
 
     public static void main(String... args) throws RuntimeException {
-        new RouteServiceWrapper().run();
-    }
-
-    @Override
-    public void run() {
         URI uri = URI.create(
                 System.getenv()
                         .getOrDefault("ROUTE_SERVICE_ENDPOINT", "http://0.0.0.0:8888"));
@@ -41,8 +38,8 @@ public class RouteServiceWrapper implements Runnable {
 
         CountDownLatch latch = new CountDownLatch(1);
         Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> shutdownServer(server, latch)));
-
+                new Thread(() -> shutdown(server, latch)));
+        
         LOGGER.info("Starting server...");
         server.start();
 
@@ -53,14 +50,14 @@ public class RouteServiceWrapper implements Runnable {
         }
     }
 
-    private void shutdownServer(Server server, CountDownLatch latch) {
+    public static void shutdown(Server server, CountDownLatch latch) {
         LOGGER.info("Stopping server...");
         try {
-            server.shutdown().get();
+            server.shutdown().get(30, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            LOGGER.log(Level.SEVERE, "Error shutting down server", e);
+            LOGGER.log(Level.SEVERE, "Error shutting down was interrupted", e);
             Thread.currentThread().interrupt();
-        } catch (ExecutionException e) {
+        } catch (ExecutionException | TimeoutException e) {
             LOGGER.log(Level.SEVERE, "Error shutting down server", e);
         } finally {
             latch.countDown();
