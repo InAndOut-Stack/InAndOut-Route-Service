@@ -15,4 +15,5 @@ pluginManagement {
 }
 
 // Subprojects
+include("app")
 include("InAndOut-API-Modelling")

@@ -1,70 +1,7 @@
-group = "com.shopping.inandout"
-version = "0.0.1"
-description = "A RESTful web service for handling customer queries and computing TSP solutions"
-
+// Example: https://github.com/smithy-lang/smithy-examples/blob/main/smithy-java-examples/quickstart-java/build.gradle.kts
 allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-    }
-}
-
-plugins {
-    `java-library`
-	application
-    id("software.amazon.smithy.gradle.smithy-base")
-    jacoco
-}
-
-application {
-    mainClass = "com.shopping.inandout.routeservice.RouteServiceWrapper"
-}
-
-repositories {
-	mavenCentral()
-    mavenLocal()
-}
-
-dependencies {
-	val smithyJavaVersion: String by project
-	
-	// Smithy java model generation
-    smithyBuild("software.amazon.smithy.java.codegen:plugins:$smithyJavaVersion")
-    implementation(project(":InAndOut-API-Modelling"))
-
-    // Adds an HTTP server implementation based on netty
-    implementation("software.amazon.smithy.java:server-netty:$smithyJavaVersion")
-    // Adds the server implementation of the `RestJson1` protocol
-    implementation("software.amazon.smithy.java:aws-server-restjson:$smithyJavaVersion")
-
-    compileOnly("org.projectlombok:lombok:1.18.30")
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
-    
-    testCompileOnly("org.projectlombok:lombok:1.18.30")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
-
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
-    testImplementation("org.mockito:mockito-junit-jupiter:3.11.2")
-    testImplementation("org.mockito:mockito-core:3.11.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-// Add generated source code to the compilation sourceSet
-afterEvaluate {
-    val serverPath = smithy.getPluginProjectionPath(smithy.sourceProjection.get(), "java-server-codegen")
-    sourceSets.main.get().java.srcDir(serverPath)
-}
-
-tasks.named("compileJava") {
-    dependsOn("smithyBuild")
-}
-
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-
-    maxHeapSize = "1G"
-    testLogging {
-        events("passed", "skipped", "failed")
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
